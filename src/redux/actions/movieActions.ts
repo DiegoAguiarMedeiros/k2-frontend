@@ -31,7 +31,6 @@ export const setSearchQuery = (query: string) => {
 export const fetchMovies =
   (movie: string): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
-    console.log("fetchMovies movie ", movie);
     dispatch(fetchMoviesStart());
     try {
       // Fetch movies from an API

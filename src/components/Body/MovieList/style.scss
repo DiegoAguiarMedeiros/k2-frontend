@@ -1,0 +1,61 @@
+.movies-content {
+  display: flex;
+  flex: 8;
+  .overlay {
+    flex: 8;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparentize(#fff, 0.2);
+    .main-content {
+      display: flex;
+      max-width: 70%;
+      flex-direction: row;
+      margin: auto;
+      padding: 0 50px;
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 4;
+        padding: 10px;
+        .info-content {
+          p {
+            text-align: justify;
+          }
+        }
+        .info-content-load {
+          width: 100%;
+          p {
+            text-align: justify;
+          }
+        }
+      }
+
+      .image {
+        display: flex;
+        flex: 2;
+        justify-content: center;
+        align-items: center;
+        img {
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .image-load {
+        width: 100vh;
+        display: flex;
+        flex: 2;
+        justify-content: center;
+        align-items: center;
+        img {
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

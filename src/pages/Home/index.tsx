@@ -6,9 +6,7 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ movieTitle }) => {
-  console.log("movieTitle", movieTitle);
-
-  return <div>{movieTitle ? <Body movieTitle={movieTitle} /> : null}</div>;
+  return <Body movieTitle={movieTitle} />;
 };
 
 export default Home;

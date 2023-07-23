@@ -11,12 +11,10 @@ const Header: React.FC<HeaderProps> = ({ setSearchQuery }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event: any) => {
-    console.log("event.target.value", event.target.value);
     setInputValue(event.target.value);
   };
 
   const handleSearch = () => {
-    console.log("inputValue", inputValue);
     setSearchQuery(inputValue);
   };
 

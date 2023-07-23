@@ -1,8 +1,16 @@
-import React, { useEffect } from "react";
+import React, { CSSProperties, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { fetchMovies } from "../../../redux/actions/movieActions";
-
+import "./style.scss";
+import {
+  DynamicSideContent,
+  ThemeProvider,
+  Loader,
+  RatingIndicator,
+  IllustratedMessage,
+  BusyIndicator,
+} from "@ui5/webcomponents-react";
 type ReduxProps = ConnectedProps<typeof connector>;
 
 interface MovieListProps extends ReduxProps {
@@ -22,21 +30,83 @@ const MovieList: React.FC<MovieListProps> = ({
     }
   }, [fetchMovies, searchQuery]);
 
+  const backgroundStyle: CSSProperties = movies.movie.movies
+    ? {
+        position: "relative",
+        backgroundImage: `url('${movies.movie.movies?.Poster}')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
+    : {};
+
+  console.log("movies", movies);
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <ThemeProvider>
+        <div className="movies-content">
+          <div className="overlay">
+            <div className="main-content">
+              <div className="info">
+                <div className="info-content-load">
+                  <h1>
+                    <Loader />
+                  </h1>
+                  <p>
+                    <Loader />
+                  </p>
+                  <h1>
+                    <Loader />
+                  </h1>
+                  <h4>Actors:</h4>{" "}
+                  <span>
+                    <Loader />
+                  </span>
+                </div>
+              </div>
+              <div className="image-load">
+                <BusyIndicator active size="Large" waitForDefine />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ThemeProvider>
+    );
   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
-  console.log("movies", movies);
   return (
-    <div>
-      <h1>{movies.movie.movies?.Title}</h1>
-      <h1>{movies.movie.movies?.Actors}</h1>
-      <h1>{movies.movie.movies?.Plot}</h1>
-      <h1>{movies.movie.movies?.imdbRating}</h1>
-      <img src={movies.movie.movies?.Poster} alt="Movie Poster" />
+    <div className="movies-content" style={backgroundStyle}>
+      {movies.movie.movies != undefined ? (
+        <div className="overlay">
+          <div className="main-content">
+            <div className="info">
+              <div className="info-content">
+                <h1>{movies.movie.movies?.Title}</h1>
+                <p>{movies.movie.movies?.Plot}</p>
+                <h4>Actors:</h4> <span>{movies.movie.movies?.Actors}</span>
+                <h4>Reviews:</h4>{" "}
+                <span>
+                  <RatingIndicator
+                    disabled
+                    value={Number(movies.movie.movies?.imdbRating) / 2}
+                  />
+                </span>
+              </div>
+            </div>
+            <div className="image">
+              <img src={movies.movie.movies?.Poster} alt="Movie Poster" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="overlay">
+          <div className="main-content">
+            <IllustratedMessage />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
