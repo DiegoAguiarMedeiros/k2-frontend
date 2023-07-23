@@ -29,13 +29,13 @@ const Header: React.FC<HeaderProps> = ({ setSearchQuery }) => {
         <Input
           className="search-input"
           type="Text"
-          placeholder="Filme"
+          placeholder="Movie"
           value={inputValue}
           onChange={handleInputChange}
         />
         <Icon className="search-icon" design="Neutral" name="employee" />
         <Button className="search-button" onClick={handleSearch}>
-          Buscar
+          Search
         </Button>
       </div>
       <div className="header-right"></div>

@@ -28,8 +28,7 @@ interface Movie {
   imdbRating: string;
   imdbVotes: string;
   totalSeasons: string;
-  loading: boolean;
-  error: string | null;
+  Error: string | null;
 }
 
 export interface MovieState {

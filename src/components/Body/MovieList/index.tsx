@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect } from "react";
+import React, { CSSProperties, useEffect, useRef } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { fetchMovies } from "../../../redux/actions/movieActions";
@@ -10,7 +10,10 @@ import {
   RatingIndicator,
   IllustratedMessage,
   BusyIndicator,
+  Button,
+  Toast,
 } from "@ui5/webcomponents-react";
+import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";
 type ReduxProps = ConnectedProps<typeof connector>;
 
 interface MovieListProps extends ReduxProps {
@@ -39,7 +42,6 @@ const MovieList: React.FC<MovieListProps> = ({
       }
     : {};
 
-  console.log("movies", movies);
   if (loading) {
     return (
       <ThemeProvider>
@@ -73,16 +75,28 @@ const MovieList: React.FC<MovieListProps> = ({
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (movies.movie.movies?.Error) {
+    return (
+      <div className="movies-content">
+        <div className="overlay">
+          <div className="main-content">
+            <IllustratedMessage>
+              <h3 slot="title">{movies.movie.movies?.Error}</h3>
+            </IllustratedMessage>
+          </div>
+        </div>
+      </div>
+    );
   }
   return (
     <div className="movies-content" style={backgroundStyle}>
-      {movies.movie.movies != undefined ? (
+      {movies.movie.movies != undefined &&
+      movies.movie.movies?.Error == undefined ? (
         <div className="overlay">
           <div className="main-content">
             <div className="info">
               <div className="info-content">
+                ({movies.movie.movies?.Error})
                 <h1>{movies.movie.movies?.Title}</h1>
                 <p>{movies.movie.movies?.Plot}</p>
                 <h4>Actors:</h4> <span>{movies.movie.movies?.Actors}</span>
